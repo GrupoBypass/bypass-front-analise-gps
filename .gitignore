@@ -1,0 +1,8 @@
+.venv
+.env
+
+# compose container
+mysql
+
+# results
+results.csv
