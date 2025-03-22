@@ -3,25 +3,48 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 from scipy import stats
+import statsmodels.api as sm
 
-def plot_results(df):
-    # df['values'] = np.log(df['memory_result'])
-    # fig = px.line(df, y= df['memory_result'], x=df.index, title='Life expectancy in Canada')
+# Gráfico
+def plot_results_memory(df):
 
-    Q1 = df['memory_result'].quantile(0.25)
-    Q3 = df['memory_result'].quantile(0.75)
-    IQR = Q3 - Q1
+    fig = px.scatter(
+        df, 
+        y=df['memory_result'], 
+        x=df['time_result'], 
+        title='Memoria', 
+        trendline='ols',
+        color=df['memory_result']
+    )
+    
+    return fig
 
-    limite_inferior = Q1 - 1.5 * IQR
-    limite_superior = Q3 + 1.5 * IQR
+def plot_results_memory_for_time(df):
+    fig = go.Figure()   
 
-    df_sem_outliers = df[(df['memory_result'] >= limite_inferior) & (df['memory_result'] <= limite_superior)]
+    # Memoria
+    fig.add_trace(go.Scatter(
+        y= df["time_result"], 
+        x= df["memory_result"], 
+        mode= 'lines+markers', 
+        name= "Memória Usada",
+        yaxis= "y1",
+        line= dict(color="red")
+    ))
 
-    fig = px.line(df_sem_outliers, y='memory_result', x=df_sem_outliers.index, title='Memoria')
-    print(df_sem_outliers)
-    fig.show()
 
-def plot_resultsa(df):
+    fig.update_layout(
+        title="Comparação de Memória e Tempo de Execução",
+        xaxis=dict(title="Tempo de Execução"),                  # X
+        yaxis=dict(                                        # Y1
+            title="Memória Usada (MiB)",
+            side="left"
+        )
+    )
+
+    return fig
+
+def plot_results_values(df):
     fig = go.Figure()
 
     # Memoria
@@ -58,4 +81,4 @@ def plot_resultsa(df):
         )
     )
 
-    fig.show()
+    return fig
