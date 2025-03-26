@@ -28,6 +28,4 @@ def get_results():
             sql= query
         )
     
-    print(df)
-    
     return df

@@ -9,10 +9,14 @@ import statsmodels.api as sm
 def plot_results_memory(df):
 
     fig = px.scatter(
-        df, 
-        y=df['memory_result'], 
-        x=df['time_result'], 
-        title='Memoria', 
+        df,
+        x= df["time_result"], 
+        y= df["memory_result"], 
+        labels={
+            "memory_result": "Uso de Memória",
+            "time_result": "Tempo de Execução"
+        },
+        # title='Uso de Memoria x Tempo de Execução', 
         trendline='ols',
         color=df['memory_result']
     )
@@ -34,7 +38,7 @@ def plot_results_memory_for_time(df):
 
 
     fig.update_layout(
-        title="Comparação de Memória e Tempo de Execução",
+        # title="Comparação de Memória e Tempo de Execução",
         xaxis=dict(title="Tempo de Execução"),                  # X
         yaxis=dict(                                        # Y1
             title="Memória Usada (MiB)",
@@ -68,7 +72,7 @@ def plot_results_values(df):
     ))
 
     fig.update_layout(
-        title="Comparação de Memória e Tempo de Execução",
+        # title="Comparação de Memória e Tempo de Execução",
         xaxis=dict(title="Valor Somado"),                  # X
         yaxis=dict(                                        # Y1
             title="Memória Usada (MiB)",
